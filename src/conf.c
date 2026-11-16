@@ -178,7 +178,9 @@ get_combine_path(char *dirs, char *subdir)
 char *
 get_data_path()
 {
-#ifdef WIN32
+#if defined(__amigaos__)
+	char *file_path = strdup("PROGDIR:");
+#elif defined(WIN32)
 	char *file_path = strdup("./");
 #else
 #ifdef DATA_DIR
@@ -200,7 +202,10 @@ get_user_path()
   static char userPath[255] = "";
   struct stat statbuf;
   if (userPath[0] == 0) {
-#ifdef WIN32
+#if defined(__amigaos__)
+    /* the drawer's own User/, made at start (amiga/amiga_start.c) */
+    strcpy(userPath, "PROGDIR:User/");
+#elif defined(WIN32)
     strcpy(userPath, "save/");
 #else
     //Temp variable that is used to prevent NULL assignement.

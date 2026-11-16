@@ -22,7 +22,12 @@
 int scancode[5] = {
   SDLK_a,
   SDLK_s,
+#ifdef __amigaos__
+  /* an Amiga keyboard has one Ctrl key, on the left: thrust is Right Shift */
+  SDLK_RSHIFT,
+#else
   SDLK_RCTRL,
+#endif
   SDLK_RETURN,
   SDLK_SPACE
 };

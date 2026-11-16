@@ -1,0 +1,80 @@
+# Inertia Blast for GFOS (AmigaOS 3.2 with GFOpenUp), 68040/68060 + FPU, on
+# GFOpenUp's SDL 2 (LIBS:GFOpenGPU/SDL2.module and SDL2_mixer.module).
+#
+#   make -f amiga/Makefile.amigaos -j4 [STOVE=/path/to/os32-gcc16-open6]
+#
+# STOVE is a GFOpenAmigaGCC 16.2.0-open6 stove: its prefix/ has the
+# compiler, the NDK and GFOpenGPU's SDL 2 kit (prefix/m68k-amigaos). The
+# levels, pictures and sounds are in the program (upstream's datasrc/*.c);
+# the settings, statistics and high scores go to PROGDIR:User/.
+#
+# Output: build/amigaos/InertiaBlast/ (the drawer: InertiaBlast, ReadMe,
+# Controls, upstream's README, the licences, User/, with GlowIcons),
+# build/amigaos/InertiaBlast.info and Install-InertiaBlast beside them.
+
+STOVE   ?= $(HOME)/AmiCradle/stoves/os32-gcc16-open6
+PREFIX  ?= $(STOVE)/prefix
+SDL2KIT ?= $(PREFIX)/m68k-amigaos
+CC      = $(PREFIX)/bin/m68k-amigaos-gcc
+CPU     ?= -m68040 -m68881
+# -fno-tree-loop-distribute-patterns: GCC 16's loop miscompile (the kit's
+# sdl2-config gives it for GCC 16 too).
+OPT     ?= -O2 -fomit-frame-pointer -fno-tree-loop-distribute-patterns
+
+# As upstream's CMakeLists.txt; gnu11 because upstream's lib/getopt.h
+# declares getopt() without a prototype.
+DEFS    = -D__amigaos__ -DHAVE_CONFIG_H
+INC     = -Isrc -Ilib -I$(SDL2KIT)/include/SDL2
+CFLAGS  = -noixemul $(OPT) $(CPU) -std=gnu11 $(DEFS) $(INC)
+LDFLAGS = -noixemul $(CPU)
+LIBS    = -L$(SDL2KIT)/lib -lSDL2_mixer -lSDL2 -lm
+
+BUILD   = build/amigaos
+OBJDIR  = $(BUILD)/obj
+OUT     = $(BUILD)/InertiaBlast
+PROG    = InertiaBlast
+
+SRC     = src/thrust.c src/fast_gr.c src/hiscore.c src/conf.c src/things.c \
+          src/init.c src/level.c src/font5x5.c src/graphics.c \
+          datasrc/blks.c datasrc/ship.c datasrc/shld.c datasrc/colors.c \
+          datasrc/bullet.c datasrc/title.c datasrc/demomove.c \
+          datasrc/level1.c datasrc/level2.c datasrc/level3.c \
+          datasrc/level4.c datasrc/level5.c datasrc/level6.c \
+          datasrc/font.c \
+          datasrc/blip.c datasrc/boom.c datasrc/boom2.c datasrc/harp.c \
+          datasrc/engine.c datasrc/zero.c \
+          src/sdl.c src/sdlsound.c src/sdlkey.c src/statistics.c \
+          lib/getopt.c lib/getopt1.c \
+          amiga/amiga_start.c
+OBJS    = $(SRC:%.c=$(OBJDIR)/%.o)
+
+all: $(OUT)/$(PROG) package
+
+$(OUT)/$(PROG): $(OBJS)
+	@mkdir -p $(OUT)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
+
+package: $(OUT)/$(PROG) AMIGA_PORT.md README COPYING amiga/Licences.txt amiga/Controls
+	mkdir -p $(OUT)/User
+	cp amiga/Controls $(OUT)/Controls
+	cp AMIGA_PORT.md $(OUT)/ReadMe
+	cp README $(OUT)/ReadMe-InertiaBlast
+	cp COPYING $(OUT)/COPYING.txt
+	cp amiga/Licences.txt $(OUT)/Licences.txt
+	cp amiga/icons/InertiaBlast.info amiga/icons/ReadMe.info $(OUT)/
+	for f in ReadMe-InertiaBlast COPYING.txt Licences.txt Controls; do \
+	    cp amiga/icons/ReadMe.info $(OUT)/$$f.info; done
+	cp amiga/icons/Data.info $(OUT)/User.info
+	cp amiga/icons/InertiaBlast-drawer.info $(BUILD)/InertiaBlast.info
+	cp amiga/Install-InertiaBlast amiga/Install-InertiaBlast.info $(BUILD)/
+
+$(OBJDIR)/%.o: %.c $(wildcard src/*.h lib/*.h)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+objs: $(OBJS)
+
+clean:
+	rm -rf $(BUILD)
+
+.PHONY: all package objs clean

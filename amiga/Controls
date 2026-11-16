@@ -1,0 +1,21 @@
+Inertia Blast: the keys
+=======================
+
+In the game (the keys can be changed with C on the title screen):
+
+  A             turn left
+  S             turn right
+  Right Shift   thrust
+  Return        fire
+  Space         pick up the pod, and the shield
+
+  P             pause            C   go on
+  Esc or Q      end the game
+
+On the title screen: I instructions, C configure the keys, H high
+scores, P play, A about, Q quit.
+
+The keys every AmiCradle game has on Right Amiga (GFOpenUp's SDL2.module):
+Right Amiga + F window or full screen, + P pause, + Q quit, + M free the
+mouse pointer, + S a screenshot in the drawer's Screenshots, and Help
+shows this file.
