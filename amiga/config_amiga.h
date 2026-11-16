@@ -7,7 +7,7 @@
 #define HAVE_ATEXIT 1
 #define HAVE_FCNTL_H 1
 #define HAVE_GETTIMEOFDAY 1
-#define HAVE_RANDOM 1
+/* no random() in libnix: src/compat.h uses rand() */
 #define HAVE_SOUND 1
 /* the rate the SDL build plays the samples at, as on Linux (src/sound.h) */
 #define SAMPLE_RATE 11000
