@@ -61,6 +61,8 @@ What was changed
   own lib/getopt.c and getopt1.c, which restart when the game sets optind
   to 0.
 - src/conf.c: the data path is PROGDIR:, the user path PROGDIR:User/.
+- tests/host/test_getopt.sh: upstream's getopt gives the same options on
+  both scans and none for a Workbench start (argc 0).
 - src/sdlkey.c: thrust is Right Shift, as an Amiga keyboard has no right
   Ctrl.
 - amiga/amiga_start.c: 256 KB of stack, the $VER string, PROGDIR:User made
