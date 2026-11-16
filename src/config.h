@@ -1,4 +1,7 @@
 /* src/config.h.  Generated from config.h.in by configure.  */
+#ifdef __amigaos__
+#include "../amiga/config_amiga.h"
+#else
 /* src/config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Have 16 bit sound */
@@ -154,3 +157,4 @@
 #ifndef __cplusplus
 /* #undef inline */
 #endif
+#endif /* __amigaos__ */

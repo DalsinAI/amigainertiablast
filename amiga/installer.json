@@ -1,0 +1,14 @@
+{
+  "name": "Inertia Blast",
+  "version": "0.93-gfos1",
+  "drawer": "InertiaBlast",
+  "program": "InertiaBlast",
+  "cpu": "68040",
+  "fpu": true,
+  "space": 900000,
+  "modules": ["SDL2.module", "SDL2_mixer.module"],
+  "keep": ["User"],
+  "parent": "Work:Games",
+  "badge": "icons/art/inertiablast.png",
+  "script": "Install-InertiaBlast"
+}

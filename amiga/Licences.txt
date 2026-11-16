@@ -1,0 +1,19 @@
+Inertia Blast: licences
+=======================
+
+The game: Inertia Blast by Dennis Payne (dulsi@identicalsoftware.com),
+from Thrust by Peter Ekberg (peda@lysator.liu.se),
+https://github.com/dulsi/thrust.
+
+- The program, its levels, pictures and sounds (src/, datasrc/, lib/) are
+  under the GNU General Public License, version 2 or later (COPYING.txt).
+- Upstream's README credits the title screen's art: the tractor beam and
+  the engine flame are modified from Skorpio's "Sci-fi effects"
+  (https://opengameart.org/content/sci-fi-effects, CC BY 3.0 or GPL 3);
+  the title font is modified from JROB774's "Pixel Block Font"
+  (https://opengameart.org/content/pixel-block-font, CC BY 3.0).
+- The Amiga port's own files (amiga/, AMIGA_PORT.md, package/, tools/) are
+  GPL 2 or later, like the game; the GlowIcon art is The AmiCradle Team's
+  own.
+
+The game's data are upstream's own, unchanged.
