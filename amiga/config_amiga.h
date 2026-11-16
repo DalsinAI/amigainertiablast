@@ -9,6 +9,8 @@
 #define HAVE_GETTIMEOFDAY 1
 #define HAVE_RANDOM 1
 #define HAVE_SOUND 1
+/* the rate the SDL build plays the samples at, as on Linux (src/sound.h) */
+#define SAMPLE_RATE 11000
 #define HAVE_STRDUP 1
 #define HAVE_UNISTD_H 1
 #define HAVE_USLEEP 1
